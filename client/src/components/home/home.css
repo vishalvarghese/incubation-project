@@ -1,0 +1,9 @@
+.homebody{
+  background-image: url(../../asset/des2a2.jpg);
+  height:108vh;
+  background-size: cover;
+z-index: 0;
+}
+.heading{
+text-align: right;
+}

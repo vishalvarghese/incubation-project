@@ -1,6 +1,7 @@
 const express =require("express")
 const app = express()
-
+const {connectdb}=require('../server/config/connectins')
+connectdb()
 app.get('/api',(req,res)=>{{
     res.json({'user':'vishal varghese'})
 }})
