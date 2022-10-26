@@ -4,6 +4,8 @@ import Signup from "./pages/Signup"
 import Adminlogin from"./pages/adminlogin"
 import Home from './pages/Home'
 import Footer from "./components/footer"
+import Userdashboard from "./pages/userdashboard"
+import Admindashboard from "./pages/Admindashboard"
 import {
   BrowserRouter as Router,
   Route,Routes
@@ -21,6 +23,8 @@ function App() {
       <Route path="/login" element={<Login/>}/>
       <Route path="/signup" element={<Signup/>}/>
       <Route path="/admin" element={<Adminlogin/>}/>
+      <Route path="/userdashboard" element={<Userdashboard/>}/>
+      <Route path="/admindashboard" element={<Admindashboard/>}/>
       </Routes>      
   </Router>
   </div>
