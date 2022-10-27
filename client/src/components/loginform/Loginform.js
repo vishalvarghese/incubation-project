@@ -1,4 +1,4 @@
-import React,{useState} from 'react'
+import React,{useContext,useState} from 'react'
 import shakehands from '../../../src/asset/shakehands.jpg'
 import {Link,useNavigate} from 'react-router-dom'
 import axios from "axios"
@@ -10,32 +10,47 @@ function Loginform() {
     email:"",
     password:""
    }
+   const [errorMessage, setErrorMessage] = useState('')
   const [loginData,setloginData]=useState(formvalues); 
-
   const [cookie,setCookie]=useCookies(['user'])
   const handleChange= (e) =>{
     setloginData({...loginData,[e.target.name]:e.target.value})
   }
+
    
   const handleSubmit=(e)=>{
     e.preventDefault()
-    axios
-    .post("http://localhost:5000/login",loginData)    
-    .then((response)=>{
-      if (response.data.state=="ok") {
-        alert("login sucessful")
-        setCookie('token', response.data.data, { path: '/' });
-      //  window.localStorage.setItem("token",response.data.data)
-        // window.location.href="/userdashboard"
-        navigate("/userdashboard")
+    try {
+      if (!loginData.email) {
+         setErrorMessage("Email is required");
+     } else if (!loginData.email.match(/^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/)) {
+         setErrorMessage("Enter a valid email");
+     } else if (!loginData.password) {
+         setErrorMessage("Password is required");
+     } else if (loginData.password.length < 4) {
+         setErrorMessage("Password must be atleast 4 characters");
+     } else if (loginData.password.length > 20) {
+         setErrorMessage("Password must be less than 20 characters");
+     }else{
+      axios
+      .post("http://localhost:5000/login",loginData)    
+      .then((response)=>{
+        console.log(response.data.error);
+        setErrorMessage(response.data.error)
+        if (response.data.state==="ok") {
+          // alert("login sucessful")
+          setCookie('token', response.data.data, { path: '/' });
+     
+          navigate("/userdashboard")
+      }
+  
+      })
+     }
     }
-
-      // navigate("/userdashboard")
-    }) 
-    .catch((error)=>{
+   catch(error){
       console.log(error);
-    })
-   }
+    }
+  }
   
 
   return (
@@ -49,6 +64,7 @@ function Loginform() {
         <h1 className='text-blue-900 font-bold text-3xl p-7 text-center'>Welcome Entrepreneurs</h1>
 
         <form className='max-w-[400px] w-full h-max mx-auto rounded-lg bg-gray-700 p-8 px-8 '>
+        {errorMessage && <div className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">{errorMessage}</div>}
           <h2 className='text-4xl text-white font-extrabold text-center'>LOGIN</h2>
 
 

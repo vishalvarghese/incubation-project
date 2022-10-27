@@ -6,14 +6,20 @@ import Home from './pages/Home'
 import Footer from "./components/footer"
 import Userdashboard from "./pages/userdashboard"
 import Admindashboard from "./pages/Admindashboard"
+import Rejectlist  from "./pages/rejectlist"
+import Approvelist from './pages/Approvedlist'
 import {
   BrowserRouter as Router,
   Route,Routes
 } from "react-router-dom";
+import  User from './store/usercontext'
 function App() {
   return (
     <div>
+      <User>
+
       <div>
+
       <Header/>
       </div>
   <div>
@@ -25,12 +31,15 @@ function App() {
       <Route path="/admin" element={<Adminlogin/>}/>
       <Route path="/userdashboard" element={<Userdashboard/>}/>
       <Route path="/admindashboard" element={<Admindashboard/>}/>
+      <Route path="/rejectlist" element={<Rejectlist/>}/>
+      <Route path="/approvelist" element={<Approvelist/>}/>
       </Routes>      
   </Router>
   </div>
     <div>
     <Footer/>
     </div>
+    </User>
     </div>
   );
 }

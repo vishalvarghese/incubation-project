@@ -1,5 +1,6 @@
 const app = require("../../app");
 const User = require("../../modal/userschema")
+const application= require("../../modal/applicationSchema")
 const bcrypt= require('bcrypt')
 const jwt = require("jsonwebtoken")
 
@@ -55,8 +56,25 @@ const login= async(req,res)=>{
 }
 
 const applicationsave= async(req,res)=>{
-    let data= req.body
-    console.log(data);
+    // let data= req.body
+    console.log(req.body);
+    try{
+        let {name,Address,City,Phonenumber,Email,businessDetail}=req.body
+        const Application = await new application({
+            name,
+            Address,
+            City,
+            Phonenumber,
+            Email,
+            businessDetail
+        })
+        console.log(Application);
+       await Application.save() 
+
+    } catch(error)
+    {
+        console.log(error.message);
+    }
 }
 
 module.exports={postSignup,applicationsave,login}

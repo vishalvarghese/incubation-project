@@ -10,6 +10,7 @@ function Signupform() {
   password:""
  }
 const [signup,setSignup]=useState(formvalues); 
+const [errorMessage, setErrorMessage] = useState('')
  
 const handleChange= (e) =>{
   setSignup({...signup,[e.target.name]:e.target.value})
@@ -17,14 +18,41 @@ const handleChange= (e) =>{
 
 const handleSubmit=(e)=>{
   e.preventDefault()
-  axios
-  .post("http://localhost:5000/signup",signup)    
-  .then((res)=>{
-    navigate("/login")
-  }) 
-  .catch((error)=>{
-    console.log(error);
-  })
+try {
+  if(!signup.name)
+  {
+    setErrorMessage("Name is required")
+  }else if(signup.name.length<3)
+  {
+setErrorMessage('Name must be atleast 3 characters')
+  } else if (!signup.name.match(/^[A-Za-z][A-Za-z ]*$/)) 
+  {
+    setErrorMessage("Enter a valid name");
+   }
+   else if (!signup.email) {
+    setErrorMessage("Email is required");
+} else if (!signup.email.match(/^[A-Za-z0-9._-]+@[A-Za-z0-9.-]+\.[A-Za-z]{2,4}$/)) {
+    setErrorMessage("Enter a valid email");
+} else if (!signup.password) {
+    setErrorMessage("Password is required");
+} else if (signup.password.length < 4) {
+    setErrorMessage("Password must be atleast 4 characters");
+} else if (signup.password.length > 20) {
+    setErrorMessage("Password must be less than 20 characters");
+}
+  else{
+    axios
+    .post("http://localhost:5000/signup",signup)    
+    .then((res)=>{
+      navigate("/login")
+    })
+  }
+   
+
+}catch(error){
+console.log(error.message);
+}
+
  }
 
  return (
@@ -37,6 +65,7 @@ const handleSubmit=(e)=>{
         <h1 className='text-blue-900 font-bold text-3xl pb-3 text-center'>Welcome Entrepreneurs</h1>
 
         <form className='max-w-[400px] w-full h-max mx-auto rounded-lg bg-gray-700 p-8 px-8 '>
+        {errorMessage && <div className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">{errorMessage}</div>}
           <h2 className='text-4xl text-white font-extrabold text-center'>SIGN UP HERE</h2>
 
           <div className='flex flex-col text-white py-2'>

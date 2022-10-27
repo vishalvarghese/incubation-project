@@ -1,6 +1,7 @@
-import React,{useState} from 'react'
+import React,{useContext,useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import axios from "axios"
+import { UserContext } from '../../store/usercontext'
 function Application_form() {
     const navigate =useNavigate()
     const formvalues ={
@@ -12,7 +13,7 @@ function Application_form() {
         businessDetail:""
        }
       const [application,setapplication]=useState(formvalues);
-
+      const {removeCookie} = useContext(UserContext)
       const handleChange= (e) =>{
         setapplication({...application,[e.target.name]:e.target.value})
       }
@@ -28,6 +29,14 @@ function Application_form() {
           console.log(error);
         })
        }
+
+       const logout = () => {
+        // localStorage.removeItem('user');
+        // setUserDetails(null)
+        removeCookie("token");
+        navigate("/login");
+      // alert('help to logout') 
+      };
       
     return (
     <div className='flex justify-center'>
@@ -197,7 +206,8 @@ function Application_form() {
   <div>
 </div>
 </div>
-<p className='bg-gray-600 h-7 text-teal-50'>Log Out</p>
+<button onClick={logout} className='bg-gray-600 h-7 text-teal-50 rounded-full px-2 justify-center'
+>Log Out</button>
 
     </div>
   )
