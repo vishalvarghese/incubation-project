@@ -12,18 +12,24 @@ function Application_form() {
         Email:"",
         businessDetail:""
        }
+
       const [application,setapplication]=useState(formvalues);
       const {removeCookie} = useContext(UserContext)
+      
       const handleChange= (e) =>{
         setapplication({...application,[e.target.name]:e.target.value})
       }
+ 
+     const[submitdone,setsubmitdone]=useState('');
 
       const handleSubmit=(e)=>{
         e.preventDefault()
         axios
         .post("http://localhost:5000/applicationform",application)    
         .then((res)=>{
-           navigate("/login")
+          console.log(res);
+          setsubmitdone(res.data.msg)
+           navigate("/userdashboard")
         }) 
         .catch((error)=>{
           console.log(error);
@@ -39,10 +45,13 @@ function Application_form() {
       };
       
     return (
+     
     <div className='flex justify-center'>
 
-       
-      <div class="block p-6 rounded-lg shadow-lg bg-white w-3/4">
+    {submitdone ? <><div className='block p-6 rounded-lg shadow-lg bg-white w-3/4 mb-96 text-2xl'>
+      <h1>Your application is succesfully submitted.<br/>Our team will go through your application and contact you back as soon as possible</h1></div> </>: 
+    <>
+     <div class="block p-6 rounded-lg shadow-lg bg-white w-3/4">
   <form>
   <p className='text-2xl'>Application From</p>
   <br />
@@ -203,9 +212,11 @@ function Application_form() {
       ease-in-out" 
       onClick={handleSubmit}>Submit</button>
   </form>
-  <div>
+
 </div>
-</div>
+    
+    </>}
+     
 <button onClick={logout} className='bg-gray-600 h-7 text-teal-50 rounded-full px-2 justify-center'
 >Log Out</button>
 

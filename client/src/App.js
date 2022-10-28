@@ -8,11 +8,13 @@ import Userdashboard from "./pages/userdashboard"
 import Admindashboard from "./pages/Admindashboard"
 import Rejectlist  from "./pages/rejectlist"
 import Approvelist from './pages/Approvedlist'
+import Progressbar from './pages/progressbarpage'
 import {
   BrowserRouter as Router,
   Route,Routes
 } from "react-router-dom";
 import  User from './store/usercontext'
+import SlotPage from "./pages/slotPage"
 function App() {
   return (
     <div>
@@ -33,6 +35,8 @@ function App() {
       <Route path="/admindashboard" element={<Admindashboard/>}/>
       <Route path="/rejectlist" element={<Rejectlist/>}/>
       <Route path="/approvelist" element={<Approvelist/>}/>
+      <Route path="/progressbar" element={<Progressbar/>}/>
+      <Route path="/slotbooking" element={<SlotPage/>}/>
       </Routes>      
   </Router>
   </div>

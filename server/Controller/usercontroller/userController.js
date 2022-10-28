@@ -70,7 +70,7 @@ const applicationsave= async(req,res)=>{
         })
         console.log(Application);
        await Application.save() 
-
+       res.json({ msg: "Application submited" })
     } catch(error)
     {
         console.log(error.message);

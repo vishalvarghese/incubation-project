@@ -1,6 +1,7 @@
 import React,{useState} from 'react'
 import {useNavigate} from 'react-router-dom'
 import axios from "axios"
+import { useCookies } from 'react-cookie';
 function Adminloginform() {
 
   const navigate=useNavigate()
@@ -9,8 +10,9 @@ function Adminloginform() {
     email:"",
     password:""
    }
+   const [errorMessage, setErrorMessage] = useState('')
   const [adminLoginData,setadminLoginData]=useState(formvalues); 
-  
+  const [cookies, setCookie] = useCookies(['admin']);
   const handleChange= (e) =>{
     setadminLoginData({...adminLoginData,[e.target.name]:e.target.value})
   }
@@ -19,8 +21,14 @@ function Adminloginform() {
     e.preventDefault()
     axios
     .post("http://localhost:5000/adminlogin",adminLoginData)    
-    .then((res)=>{
+    .then((response)=>{
+      console.log(response);
+      setErrorMessage(response.data.error)
+      if (response.data.state=="ok") {
+        alert("login sucessful")
+        setCookie('admin-token', response.data.data, { path: '/' });
       navigate("/admindashboard")
+      }
     }) 
     .catch((error)=>{
       console.log(error);
@@ -38,6 +46,7 @@ function Adminloginform() {
         {/* <h1 className='text-blue-900 font-bold text-3xl p-7 text-center'>Welcome Entrepreneurs</h1> */}
 
         <form className='max-w-[400px] w-full h-max mx-auto rounded-lg bg-blue-200 p-4 px-8 '>
+        {errorMessage && <div className="p-4 mb-4 text-sm text-red-700 bg-red-100 rounded-lg dark:bg-red-200 dark:text-red-800" role="alert">{errorMessage}</div>}
           <h2 className='text-4xl text-white font-extrabold text-center'>ADMIN</h2>
 
 
