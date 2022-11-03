@@ -6,6 +6,7 @@ const check = (req, res, next) => {
         console.log("Check middleware")
         // console.log(req.cookies);
         const token = req.body.token
+        console.log(token);
         const user = jwt.verify(token, process.env.JWT_SECRET)
        if(user){
         req.user=user
