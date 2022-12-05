@@ -7,6 +7,16 @@ accept or reject appplication,review application,Approve application,
 allocate slot for incubation based on approved list,display the progress 
 bar on the different stages of application processing.
 
+Features list,
+1.Sign up and Login Authentication
+2.JWT authentication and route verification
+3.User Application Submission
+4.Admin side Application management
+5.Booking of slot for Incubation
+
+Technologies used:
+React js | JWT| Node js | Express js | Tailwind CSS|
+Mongo DB| JSX
 
 ## API Reference
 
@@ -113,4 +123,5 @@ I'm Vishal varghese jans, full stack developer...
 ## 🔗 Links
 [![portfolio](https://img.shields.io/badge/my_portfolio-000?style=for-the-badge&logo=ko-fi&logoColor=white)](https://vishalvarghese.github.io/portfolio/)
 [![linkedin](https://img.shields.io/badge/linkedin-0A66C2?style=for-the-badge&logo=linkedin&logoColor=white)](https://www.linkedin.com/in/vishalvjans/)
+
 
